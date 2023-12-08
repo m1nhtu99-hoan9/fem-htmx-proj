@@ -3,6 +3,7 @@ module femHtmx
 go 1.21
 
 require (
+	github.com/google/uuid v1.4.0
 	github.com/labstack/echo/v4 v4.11.3
 	github.com/samber/lo v1.39.0
 	github.com/tdewolff/minify/v2 v2.20.9
@@ -10,7 +11,6 @@ require (
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/google/uuid v1.4.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
