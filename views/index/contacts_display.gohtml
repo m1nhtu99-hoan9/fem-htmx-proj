@@ -1,0 +1,16 @@
+{{ block "contacts-display" . }}
+    {{ if .ContactsErrors }}
+      <div>
+          {{ range .ContactsErrors }}
+            <p>
+              <span style="color: red">{{ . }}</span>
+            </p>
+          {{ end }}
+      </div>
+    {{ end }}
+    <div id="contacts-container" style="display: inline-flex; flex-direction: column; gap: 0.55rem;">
+        {{ range .Contacts }}
+            {{ template "contact-div" . }}
+        {{ end }}
+    </div>
+{{ end }}

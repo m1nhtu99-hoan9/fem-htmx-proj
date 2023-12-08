@@ -1,0 +1,8 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.contact-container.htmx-swapping {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

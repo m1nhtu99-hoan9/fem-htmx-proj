@@ -1,0 +1,61 @@
+{{ block "index" . }}
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello, World with counter</title>
+    <script src="https://unpkg.com/htmx.org@1.9.9"
+            integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/picnic@6.5.4/picnic.min.css" rel="stylesheet">
+    <link href="/stylesheets/index.css" rel="stylesheet">
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        console.assert(window.htmx, "htmx?")
+        htmx.logAll();
+        htmx.on("htmx:beforeSwap", (evt) => {
+          if ([400, 422].includes(evt.detail.xhr.status)) {
+            evt.detail.shouldSwap = true;
+            evt.detail.isError = false;
+          }
+        });
+        document.querySelectorAll("button").forEach(btnEl => {
+          const disableBtnElCallback = function() {
+            btnEl.setAttribute("disabled", "true");
+          };
+          const enableBtnElCallback = function() {
+            btnEl.removeAttribute("disabled");
+          }
+          btnEl.addEventListener("htmx:beforeRequest", disableBtnElCallback);
+          btnEl.addEventListener("htmx:beforeSwap", disableBtnElCallback);
+          btnEl.addEventListener("htmx:afterRequest", enableBtnElCallback);
+          btnEl.addEventListener("htmx:afterSwap", enableBtnElCallback);
+        })
+      });
+    </script>
+  </head>
+  <body hx-ext="response-targets" style="padding: 1rem">
+  <section>
+      {{ template "count" . }}
+  </section>
+  <br/>
+  <section id="contact-form-container" style="display: flex; gap: 0.55rem; flex-direction: column;">
+      {{ template "contact-form" . }}
+  </section>
+  <hr/>
+  <section id="contacts-display-container">
+      {{ template "contacts-display" . }}
+  </section>
+  </body>
+  </html>
+{{ end }}
+
+{{ block "count" . }}
+  <span> Counted {{ .Count }} </span>
+  <button hx-target="body" hx-post="/count">
+    Pump it up!
+  </button>
+{{ end }}
+
+

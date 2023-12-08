@@ -1,0 +1,36 @@
+{{ block "contact-form" . }}
+    <main>
+      <form hx-post="/contacts"
+            hx-target="this"
+            hx-swap="outerHTML"
+      >
+        <label for="name-txt-inp">Name:</label>
+        <input id="name-txt-inp" type="text"
+               name="name" {{ if .ContactForm.Values.name }} value="{{ .ContactForm.Values.name }}" {{ end }} />
+        <label for="email-txt-inp">Email:</label>
+        <input id="email-txt-inp" type="text"
+               name="email" {{ if .ContactForm.Values.email }} value="{{ .ContactForm.Values.email }}" {{ end }} />
+          {{ if .ContactForm.Errors.email }}
+            <div style="color: red">{{ .ContactForm.Errors.email }}</div>
+          {{ end }}
+          {{ if .ContactForm.Errors.name }}
+            <div style="color: red">{{ .ContactForm.Errors.name }}</div>
+          {{ end }}
+        <button type="submit">Create Contact</button>
+      </form>
+    </main>
+    <aside>
+      <button class="error"
+              hx-delete="/contacts/0"
+              type="button"
+      >
+        Trigger <span style="font-family: monospace"> DELELE /contacts/0</span>
+      </button>
+      <button class="error"
+              hx-delete="/contacts/{{ .Constants.EmptyUuid }}"
+              type="button"
+      >
+        Trigger <span style="font-family: monospace"> DELELE /contacts/{{ .Constants.EmptyUuid }}</span>
+      </button>
+    </aside>
+{{ end }}

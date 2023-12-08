@@ -1,0 +1,31 @@
+{{ block "contact-div" . }}
+  <div class="contact-container"
+       id="contact-{{ .Id }}"
+       data-contact-id="{{ .Id }}"
+       data-contact-email="{{ .Name }}"
+       style="display: flex; flex-direction: row; gap: 1rem">
+    <div hx-delete="/contacts/{{ .Id.String }}"
+         hx-indicator="#ci-{{ .Id }}"
+         hx-target="section#contacts-display-container"
+         hx-swap="innerHTML swap:500ms"
+         style="width: 1rem; cursor: pointer"
+    >
+        {{ template "delete-icon-svg" . }}
+    </div>
+    <div>
+      <span>Name: <span> {{ .Name }}</span></span>
+      <span>,&#9;</span>
+      <span>Email: <span>{{ .Email }}</span></span>
+    </div>
+    <div id="ci-{{ .Id }}" class="htmx-indicator">
+      <img src="/images/bars.svg" alt="loading" style="width: 1rem">
+    </div>
+  </div>
+{{ end }}
+
+{{ block "delete-icon-svg" . }}
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path fill="none" d="M0 0h24v24H0z"/>
+    <path d="M4 2h16a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1zM3 6h18v16a1 1 0 01-1 1H4a1 1 0 01-1-1V6zm3 3v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0z"/>
+  </svg>
+{{ end }}
